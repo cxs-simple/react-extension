@@ -20,8 +20,13 @@ import ReactDOM from 'react-dom'
 
 //   // 卸载的回调
 //   unmount = () => {
-//     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-//     // this.timer.
+//     this.timer = ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+//   }
+
+//   // 组件将要卸载生命周期钩子
+//   componentWillUnmount() {
+//     // 清除定时器
+//     clearInterval(this.timer);
 //   }
 
 //   render() {
@@ -50,15 +55,27 @@ function Demo() {
 
   // useEffect: 在函数组件中执行副作用操作(用于模拟类组件中的生命周期钩子)
   React.useEffect(() => {
-    setInterval(() => {
+    let timer = setInterval(() => {
       setCount(count => count + 1);
     }, 1000)
-  }, [])
+    // return的函数相当于类式组件中的componentWillUnmount钩子
+    return () => {
+      clearInterval(timer);
+    }
+    // 1.[]: 回调函数只会在第一次render()后执行，相当于componentDidMount钩子
+    // 2.[stateValue]: 监听状态值，相当于componentDidMount与componentDidUpdate钩子
+  }, []) 
+
+  // 卸载回调
+  function unmount() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+  }
 
   return (
     <div>
       <h2>当前求和值为：{count}</h2>
       <button onClick={increment}>点我 +1</button>
+      <button onClick={unmount}>点我 卸载</button>
     </div>
   )
 }
