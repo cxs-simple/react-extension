@@ -6,9 +6,22 @@ import ReactDOM from 'react-dom'
 //   // 初始化状态
 //   state = {count: 0}
 
+//   // 创建ref容器
+//   myRef = React.createRef();
+
 //   // 加的回调
 //   increment= () => {
 //     this.setState(state => ({count: state.count + 1}))
+//   }
+
+//   // 卸载的回调
+//   unmount = () => {
+//     this.timer = ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+//   }
+
+//   // 显示数据的回调
+//   show = () => {
+//     alert(this.myRef.current.value);
 //   }
 
 //   // 生命周期钩子
@@ -16,11 +29,6 @@ import ReactDOM from 'react-dom'
 //     this.timer = setInterval(() => {
 //       this.setState(state => ({count: state.count + 1}))
 //     }, 1000)
-//   }
-
-//   // 卸载的回调
-//   unmount = () => {
-//     this.timer = ReactDOM.unmountComponentAtNode(document.getElementById('root'));
 //   }
 
 //   // 组件将要卸载生命周期钩子
@@ -32,9 +40,11 @@ import ReactDOM from 'react-dom'
 //   render() {
 //     return (
 //       <div>
+//         <input type="text" ref={this.myRef}/>
 //         <h2>当前求和值为：{this.state.count}</h2>
-//         <button onClick={this.increment}>点我 +1</button>
-//         <button onClick={this.unmount}>点我卸载组件</button>
+//         <button onClick={this.increment}>点我 +1</button>&nbsp;
+//         <button onClick={this.unmount}>点我卸载组件</button>&nbsp;
+//         <button onClick={this.show}>点我提示数据</button>&nbsp;
 //       </div>
 //     );
 //   }
@@ -44,6 +54,9 @@ import ReactDOM from 'react-dom'
 function Demo() {
   // 使用state hook处理状态
   const [count, setCount] = React.useState(0);
+
+  // 创建ref容器
+  const myRef = React.useRef();
 
   // 加法的回调
   function increment() {
@@ -71,11 +84,18 @@ function Demo() {
     ReactDOM.unmountComponentAtNode(document.getElementById('root'))
   }
 
+  // 提示数据的回调
+  function show() {
+    alert(myRef.current.value);
+  }
+
   return (
     <div>
+      <input type="text" ref={myRef}/>
       <h2>当前求和值为：{count}</h2>
-      <button onClick={increment}>点我 +1</button>
-      <button onClick={unmount}>点我 卸载</button>
+      <button onClick={increment}>点我 +1</button>&nbsp;
+      <button onClick={unmount}>点我 卸载</button>&nbsp;
+      <button onClick={show}>点我 提示输入数据</button>&nbsp;
     </div>
   )
 }

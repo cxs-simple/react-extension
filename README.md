@@ -51,4 +51,9 @@
     (4) 可以把 useEffect Hook 看做如下三个函数的组合
           componentDidMount()
           componentDidUpdate()
-          componentWillUnmount() 
+          componentWillUnmount()
+
+  5. Ref Hook
+    - Ref Hook可以在函数组件中存储/查找组件内的标签或任意其它数据
+    - 语法: const refContainer = React.useRef()
+    - 作用:保存标签对象,功能与React.createRef()一样
