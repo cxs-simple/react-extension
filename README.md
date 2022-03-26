@@ -84,3 +84,18 @@
             )
           }
         </xxxContext.Consumer>
+
+## 五. 组件优化
+  1. Component的俩个问题
+    (1) 只要执行setState(),即使不改变状态数据, 组件也会重新render() ==> 效率低
+    (2) 只当前组件重新render(), 就会自动重新render子组件，纵使子组件没有用到父组件的任何数据 ==> 效率低
+  
+  2. 效率高的做法：只有当组件的state或props数据发生改变时才重新render()
+  3. 原因：Component中的shouldComponentUpdate()总是返回true
+  4. 解决办法
+    (1) a. 重写shouldComponentUpdate()方法
+        b. 比较新旧state或props数据, 如果有变化才返回true, 如果没有返回false
+    (2) a. 使用PureComponent
+        b. PureComponent重写了shouldComponentUpdate(), 只有state或props数据有变化才返回true
+        c. 注意：只是进行state和props数据的浅比较, 如果只是数据对象内部数据变了, 返回false
+                不要直接修改state数据, 而是要产生新数据
